@@ -1,22 +1,27 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "allowJs": true,
     "target": "es6",
     "module": "commonJS",
     "declaration": true,
     "sourceMap": true,
-    "outDir": "./lib",
+    "outDir": "./build",
     "removeComments": true,
     "strict": true,
+    "emitDecoratorMetadata": true,
     "noImplicitAny": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
+    "strictPropertyInitialization": false,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
+    // "noUnusedParameters": true,
+    // "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": false
-  }
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "./build/**/*"]
 }
