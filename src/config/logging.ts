@@ -1,3 +1,5 @@
+import colors from 'colors'
+
 const getTimeStamp = (): string => {
   return new Date().toISOString()
 }
@@ -5,30 +7,33 @@ const getTimeStamp = (): string => {
 const printMessage = (
   level: 'INFO' | 'WARN' | 'ERROR' | 'DEBUG',
   namespace: string,
+  colorFunc: (text: string) => string,
   message: string,
   object?: any
 ) => {
   if (object) {
     console.log(
-      `[${getTimeStamp()}] [${level}] [${namespace}] ${message}`,
+      colorFunc(`[${getTimeStamp()}] [${level}] [${namespace}] ${message}`),
       object
     )
   } else {
-    console.log(`[${getTimeStamp()}] [${level}] [${namespace}] ${message}`)
+    console.log(
+      colorFunc(`[${getTimeStamp()}] [${level}] [${namespace}] ${message}`)
+    )
   }
 }
 
 const info = (namespace: string, message: string, object?: any) =>
-  printMessage('INFO', namespace, message, object)
+  printMessage('INFO', namespace, colors.white, message, object)
 
 const warn = (namespace: string, message: string, object?: any) =>
-  printMessage('WARN', namespace, message, object)
+  printMessage('WARN', namespace, colors.yellow, message, object)
 
 const error = (namespace: string, message: string, object?: any) =>
-  printMessage('ERROR', namespace, message, object)
+  printMessage('ERROR', namespace, colors.red, message, object)
 
 const debug = (namespace: string, message: string, object?: any) =>
-  printMessage('DEBUG', namespace, message, object)
+  printMessage('DEBUG', namespace, colors.cyan, message, object)
 
 export default (namespace: string) => {
   const infoBind = info.bind(null, namespace)
