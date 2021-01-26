@@ -5,8 +5,10 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
+import Game from './Game'
 
 @Entity('users')
 export default class User extends BaseEntity {
@@ -14,10 +16,16 @@ export default class User extends BaseEntity {
   id: number
 
   @Column()
+  name: string
+
+  @Column()
   email: string
 
   @Column()
   password: string
+
+  @OneToMany(() => Game, game => game.author)
+  games: Game[]
 
   @BeforeInsert()
   @BeforeUpdate()
