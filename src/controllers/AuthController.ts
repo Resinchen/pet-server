@@ -8,6 +8,26 @@ import User from '../models/User'
 const logger = logging('Auth Controller')
 
 class AuthController {
+  async registrate(req: Request, res: Response) {
+    logger.info('Register new user')
+    const repository = getRepository(User)
+    const { name, email, password } = req.body
+
+    const userExists = await repository.findOne({
+      where: { email },
+    })
+
+    if (userExists) {
+      logger.error('Conflict: user already exist', userExists)
+      return res.sendStatus(409)
+    }
+
+    const user = repository.create({ name, email, password })
+    await repository.save(user)
+
+    return res.json(user)
+  }
+
   async authenticate(req: Request, res: Response) {
     logger.info('Authenticate user')
     const repository = getRepository(User)
