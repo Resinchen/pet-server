@@ -6,27 +6,21 @@ import User from '../models/User'
 const logger = logging('User Controller')
 
 class UserController {
-  async index(req: Request, res: Response) {
-    return res.json({ userID: req.userId })
-  }
-
-  async store(req: Request, res: Response) {
-    logger.info('Create new User')
+  async updateUser(req: Request, res: Response) {
+    logger.info('Update user')
     const repository = getRepository(User)
-    const { email, password } = req.body
 
-    const userExists = await repository.findOne({ where: { email } })
+    const user = await repository.findOne(req.params.id)
 
-    if (userExists) {
-      logger.error('Conflict: user already exist', userExists)
-      return res.sendStatus(409)
+    if (!user) {
+      logger.error('Error: user not found')
+      return res.sendStatus(404)
     }
 
-    const user = repository.create({ email, password })
-
+    const newUser = await repository.merge(user, req.body)
     await repository.save(user)
 
-    return res.json(user)
+    return res.json(newUser)
   }
 }
 

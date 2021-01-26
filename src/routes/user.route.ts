@@ -4,7 +4,6 @@ import authMiddleware from '../middlewares/authMiddleware'
 
 const router = express.Router()
 
-router.post('/users', UserController.store)
-router.get('/users', authMiddleware, UserController.index)
+router.put('/users/:id', authMiddleware, UserController.updateUser)
 
 export = router
