@@ -6,6 +6,8 @@ import config from './config/config'
 import logging from './config/logging'
 import './db'
 import authRoutes from './routes/auth.route'
+import filesRoutes from './routes/file.route'
+import gamesRoutes from './routes/game.route'
 import usersRoutes from './routes/user.route'
 
 const logger = logging('Server')
@@ -33,6 +35,8 @@ app.use(cors())
 
 // Routes
 app.use(usersRoutes)
+app.use(gamesRoutes)
+app.use(filesRoutes)
 app.use(authRoutes)
 
 // Error Handling
