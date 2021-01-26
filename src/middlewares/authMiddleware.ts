@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
+import config from '../config/config'
 import logging from '../config/logging'
 
 const logger = logging('Auth middleware')
@@ -24,9 +25,8 @@ export default function authMiddleware(
 
   const token = authorization.replace('Bearer', '').trim()
 
-  //TODO: extract secret key to config
   try {
-    const data = jwt.verify(token, 'secret')
+    const data = jwt.verify(token, config.auth.jwt_secret_key)
     const { id } = data as TokenPayload
 
     req.userId = id
