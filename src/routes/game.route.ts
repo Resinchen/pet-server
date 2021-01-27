@@ -6,6 +6,7 @@ const router = express.Router()
 
 router.get('/games', authMiddleware, GameController.getAllGamesByUserId)
 router.get('/games/:id', authMiddleware, GameController.getGameInfoById)
+router.get('/download/:id', authMiddleware, GameController.downloadGame)
 router.post('/games', authMiddleware, GameController.createGame)
 router.put('/games/:id', authMiddleware, GameController.updateGame)
 router.delete('/games/:id', authMiddleware, GameController.deleteGame)

@@ -1,4 +1,6 @@
+import admzip from 'adm-zip'
 import { Request, Response } from 'express'
+import fs from 'fs'
 import { getRepository } from 'typeorm'
 import logging from '../config/logging'
 import Game from '../models/Game'
@@ -34,6 +36,26 @@ class GameController {
     }
 
     return res.json(game)
+  }
+
+  async downloadGame(req: Request, res: Response) {
+    logger.info('Download game')
+    const repository = getRepository(Game)
+    const game = await repository.findOne(req.params.id)
+    const zip = new admzip()
+    const outputPath = `uploads/${game.title}.zip`
+
+    zip.addLocalFolder(`uploads/${game.title}/`)
+    fs.writeFileSync(outputPath, zip.toBuffer())
+
+    res.download(outputPath, err => {
+      if (err) {
+        logger.error('Error downloading')
+        res.sendStatus(500)
+      }
+
+      fs.unlinkSync(outputPath)
+    })
   }
 
   async createGame(req: Request, res: Response) {
