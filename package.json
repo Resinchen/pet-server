@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rm -rf build/ && prettier --write src && tsc",
     "dev": "nodemon --files src/server.ts",
-    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+    "migration": "npm run typeorm migration:generate -- -n InitDB && npm run typeorm migration:run"
   },
   "author": "",
   "license": "ISC",
