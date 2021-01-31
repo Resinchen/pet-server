@@ -1,12 +1,30 @@
 import admzip from 'adm-zip'
 import { Request, Response } from 'express'
 import fs from 'fs'
+import path from 'path'
 import { getRepository } from 'typeorm'
 import logging from '../config/logging'
 import Game from '../models/Game'
 import User from '../models/User'
 
 const logger = logging('Game Controller')
+
+function createGameFolder(gameName: string): void {
+  const gameFolderPath = `uploads/${gameName}`
+  const gameSubfolders = [
+    'script',
+    'sound',
+    'sprite',
+    'image',
+  ].map(folderName => path.join(gameFolderPath, folderName))
+
+  fs.mkdir(gameFolderPath, err => {
+    if (err) {
+      logger.error(`${err.message}`)
+    }
+    gameSubfolders.forEach(folder => fs.mkdir(folder, () => {}))
+  })
+}
 
 class GameController {
   async getAllGamesByUserId(req: Request, res: Response) {
@@ -42,6 +60,12 @@ class GameController {
     logger.info('Download game')
     const repository = getRepository(Game)
     const game = await repository.findOne(req.params.id)
+
+    if (!game) {
+      logger.error('Error: game not found')
+      return res.sendStatus(404)
+    }
+
     const zip = new admzip()
     const outputPath = `uploads/${game.title}.zip`
 
@@ -75,8 +99,8 @@ class GameController {
 
     const userRepo = getRepository(User)
     const user = await userRepo.findOne(req.userId)
-
     const game = repository.create({ title, author: user })
+    createGameFolder(game.title)
     await repository.save(game)
 
     return res.json(game)
@@ -93,7 +117,7 @@ class GameController {
       return res.sendStatus(404)
     }
 
-    const newGame = await repository.merge(game, req.body)
+    const newGame = repository.merge(game, req.body)
     await repository.save(game)
 
     return res.json(newGame)
