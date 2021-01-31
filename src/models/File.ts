@@ -4,6 +4,7 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  VersionColumn,
 } from 'typeorm'
 import Game from './Game'
 
@@ -15,7 +16,7 @@ export enum FileType {
 }
 
 @Entity('files')
-export default class Image extends BaseEntity {
+export default class File extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number
 
@@ -24,6 +25,9 @@ export default class Image extends BaseEntity {
 
   @Column()
   url: string
+
+  @VersionColumn()
+  version: number
 
   @Column({ type: 'enum', enum: FileType, default: FileType.IMAGE })
   type: FileType
