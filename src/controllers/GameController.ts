@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import fs from 'fs'
 import path from 'path'
 import { getRepository } from 'typeorm'
+import VNTSCompiler from 'vntscompiler'
 import logging from '../config/logging'
 import Game from '../models/Game'
 import User from '../models/User'
@@ -16,6 +17,7 @@ function createGameFolder(gameName: string): void {
     'sound',
     'sprite',
     'image',
+    'compiled',
   ].map(folderName => path.join(gameFolderPath, folderName))
 
   fs.mkdir(gameFolderPath, err => {
@@ -27,6 +29,21 @@ function createGameFolder(gameName: string): void {
 }
 
 class GameController {
+  async compileGame(req: Request, res: Response) {
+    logger.info('Compile game')
+    const repository = getRepository(Game)
+    const game = await repository.findOne(req.params.id)
+
+    if (!game) {
+      logger.error('Error: game not found')
+      return res.sendStatus(404)
+    }
+
+    const gamePath = `uploads/${game.title}`
+    VNTSCompiler.build(gamePath)
+    return res.status(200).json({ compile: 'ok' })
+  }
+
   async getAllGamesByUserId(req: Request, res: Response) {
     logger.info(`Get all game for user ${req.userId}`)
 
