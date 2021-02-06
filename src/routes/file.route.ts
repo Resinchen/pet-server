@@ -18,4 +18,4 @@ router.put(
   FileController.updateFile
 )
 
-export = router
+export default router

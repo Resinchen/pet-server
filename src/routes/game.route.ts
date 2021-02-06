@@ -12,4 +12,4 @@ router.put('/games/:id', authMiddleware, GameController.updateGame)
 router.delete('/games/:id', authMiddleware, GameController.deleteGame)
 router.post('/compile/:id', authMiddleware, GameController.compileGame)
 
-export = router
+export default router

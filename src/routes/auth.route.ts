@@ -6,4 +6,4 @@ const router = express.Router()
 router.post('/singin', AuthController.authenticate)
 router.post('/singup', AuthController.registrate)
 
-export = router
+export default router

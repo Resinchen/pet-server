@@ -6,4 +6,4 @@ const router = express.Router()
 
 router.put('/users/:id', authMiddleware, UserController.updateUser)
 
-export = router
+export default router
