@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   VersionColumn,
 } from 'typeorm'
-import Game from './Game'
+import Game from './Game.entity'
 
 export enum FileType {
   IMAGE = 'image',

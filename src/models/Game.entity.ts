@@ -9,8 +9,8 @@ import {
   UpdateDateColumn,
   VersionColumn,
 } from 'typeorm'
-import File from './File'
-import User from './User'
+import File from './File.entity'
+import User from './User.entity'
 
 @Entity('games')
 export default class Game extends BaseEntity {

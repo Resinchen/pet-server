@@ -5,8 +5,8 @@ import path from 'path'
 import { getRepository } from 'typeorm'
 import VNTSCompiler from 'vntscompiler'
 import logging from '../config/logging'
-import Game from '../models/Game'
-import User from '../models/User'
+import Game from '../models/Game.entity'
+import User from '../models/User.entity'
 
 const logger = logging('Game Controller')
 

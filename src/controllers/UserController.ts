@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
 import logging from '../config/logging'
-import User from '../models/User'
+import User from '../models/User.entity'
 
 const logger = logging('User Controller')
 

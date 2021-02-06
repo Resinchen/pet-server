@@ -8,7 +8,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import Game from './Game'
+import Game from './Game.entity'
 
 @Entity('users')
 export default class User extends BaseEntity {

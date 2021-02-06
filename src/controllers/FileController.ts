@@ -2,8 +2,8 @@ import { Request, Response } from 'express'
 import fs from 'fs'
 import { getRepository } from 'typeorm'
 import logging from '../config/logging'
-import File from '../models/File'
-import Game from '../models/Game'
+import File from '../models/File.entity'
+import Game from '../models/Game.entity'
 
 const logger = logging('File Controller')
 
