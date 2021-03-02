@@ -35,7 +35,16 @@ const error = (namespace: string, message: string, object?: any) =>
 const debug = (namespace: string, message: string, object?: any) =>
   printMessage('DEBUG', namespace, colors.cyan, message, object)
 
-export default (namespace: string) => {
+type LoggerMessage = (message: string, object?: any) => void
+
+export type Logger = {
+  info: LoggerMessage
+  warn: LoggerMessage
+  error: LoggerMessage
+  debug: LoggerMessage
+}
+
+export default (namespace: string): Logger => {
   const infoBind = info.bind(null, namespace)
   const warnBind = warn.bind(null, namespace)
   const errorBind = error.bind(null, namespace)

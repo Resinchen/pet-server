@@ -3,12 +3,12 @@ import cors from 'cors'
 import express from 'express'
 import 'reflect-metadata'
 import config from './config/config'
-import logging from './config/logging'
 import './db'
 import authRoutes from './routes/auth.route'
 import filesRoutes from './routes/file.route'
 import gamesRoutes from './routes/game.route'
 import usersRoutes from './routes/user.route'
+import logging from './utils/logging'
 
 const logger = logging('Server')
 const app = express()

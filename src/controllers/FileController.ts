@@ -20,7 +20,7 @@ class FileController {
   async updateFile(req: Request, res: Response) {
     logger.info('Update file')
     const { filename } = req.file
-    const resultUpdate = fileService.update(filename, req.params.id)
+    const resultUpdate = await fileService.update(filename, req.params.id)
 
     return res.json(resultUpdate)
   }
